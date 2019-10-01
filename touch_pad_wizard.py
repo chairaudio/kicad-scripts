@@ -91,7 +91,7 @@ class TouchPadWizard(FootprintWizardBase.FootprintWizard):
             pad.SetLayerSet(fcuSet)
 
         if flip:
-            pad.Flip( wxPoint(0,0))
+            pad.Flip( wxPoint(0,0), True )
 
         pad.SetPos0(pos)
         pad.SetPosition(pos)
