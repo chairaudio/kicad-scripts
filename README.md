@@ -1,6 +1,6 @@
 # Kicad-Scripts
 
-CHAIR.AUDIO Repo for Kicad Python Scripts.
+CHAIR Repo for Kicad Python Scripts.
 
 Tested with nightly build Windows Version: (5.99.0-138-g7cf42bb30), release build
 
