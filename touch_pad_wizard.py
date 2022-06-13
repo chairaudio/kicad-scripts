@@ -62,7 +62,7 @@ class TouchPadWizard(FootprintWizardBase.FootprintWizard):
 
     # build a rectangular pad
     def smdRectPad(self,module,size,pos,name,mask=False):
-        pad = D_PAD(module)
+        pad = PAD(module)
         pad.SetSize(size)
         pad.SetShape(PAD_SHAPE_RECT)
         pad.SetAttribute(PAD_ATTRIB_SMD)
@@ -80,7 +80,7 @@ class TouchPadWizard(FootprintWizardBase.FootprintWizard):
 
     # build a rectangular pad
     def smdLinePad(self,module,size,pos,name,flip,mask=False):
-        pad = D_PAD(module)
+        pad = PAD(module)
         pad.SetSize(size)
         pad.SetShape(PAD_SHAPE_RECT)
         pad.SetAttribute(PAD_ATTRIB_SMD)
@@ -100,7 +100,7 @@ class TouchPadWizard(FootprintWizardBase.FootprintWizard):
         return pad
 
     def smdTrianglePad(self,module,size,pos,name,up_down=1,left_right=0,flip=1,mask=False):
-        pad = D_PAD(module)
+        pad = PAD(module)
         pad.SetSize(wxSize(size[0],size[1]))
         pad.SetShape(PAD_SHAPE_TRAPEZOID)
         pad.SetAttribute(PAD_ATTRIB_SMD)
@@ -123,14 +123,14 @@ class TouchPadWizard(FootprintWizardBase.FootprintWizard):
         @param size: pad diameter
         @param drill: drill diameter
         """
-        pad = pcbnew.D_PAD(self.module)
+        pad = pcbnew.PAD(self.module)
         pad.SetSize(pcbnew.wxSize(size, size))
         pad.SetShape(pcbnew.PAD_SHAPE_CIRCLE)
-        pad.SetAttribute(pcbnew.PAD_ATTRIB_STANDARD)
+        pad.SetAttribute(pcbnew.PAD_ATTRIB_PTH)
         if mask:
-            pad.SetLayerSet(pad.StandardMask())
+            pad.SetLayerSet(pad.PTHMask())
         else:
-            tentedViaSet = pad.StandardMask()
+            tentedViaSet = pad.PTHMask()
             tentedViaSet.removeLayer(F_Mask)
             tentedViaSet.removeLayer(B_Mask)
             pad.SetLayerSet(tentedViaSet)
@@ -229,11 +229,11 @@ class TouchPadWizard(FootprintWizardBase.FootprintWizard):
         self.AddStartVia(pos - wxPoint(0,diogonal_length/2),diogonal_length,via_size,drill_size,name)
 
         linepos = pos + wxPoint(0,0.5*touch_clearance)
-        linelength = touch_clearance + 0.25 * diogonal_length 
+        linelength = touch_clearance + 0.25 * diogonal_length
         size_line = wxSize(line_thickness,linelength)
         module = self.module
         pad = self.smdLinePad(module,size_line,linepos,name,1,False)
-      	module.Add(pad)
+        module.Add(pad)
 
         pos = pos + wxPoint(0,diogonal_length/2+touch_clearance)
 
@@ -273,19 +273,19 @@ class TouchPadWizard(FootprintWizardBase.FootprintWizard):
         self.draw.Reference(0, -ypos, t_size)
 
         # set SMD attribute
-        self.module.SetAttributes(MOD_CMS)
+        self.module.SetAttributes(PAD_ATTRIB_SMD)
 
-        
+
         # starting pad
         xpos = diogonal_length/2- 0.5 * columns * (diogonal_length+touch_clearance)
         ypos = diogonal_length/2+touch_clearance/2 - 0.5 * rows * (diogonal_length+touch_clearance)
 
         pos = wxPointMM(pcbnew.ToMM(xpos), pcbnew.ToMM(ypos))
         module = self.module
-        
+
         width= (self.pads['columns']*(self.pads['diamond_width']+self.pads['clearance']))*0.99
         size_pad = wxSize(width,line_thickness)
-        
+
 
         for b in range(rows):
         	self.AddRow(pos,columns,touch_width,touch_clearance,diogonal_length,"r{r}".format(r=b),mask)
@@ -300,8 +300,8 @@ class TouchPadWizard(FootprintWizardBase.FootprintWizard):
         for b in range(columns):
             self.AddColumn(pos,rows,touch_width,touch_clearance,diogonal_length,"c{c}".format(c=b),via_size,drill_size,line_thickness,mask)
             pos += wxPoint(diogonal_length+touch_clearance,0)
-     
-        
+
+
 
 
 
