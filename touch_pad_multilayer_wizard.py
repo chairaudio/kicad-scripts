@@ -233,7 +233,7 @@ class TouchPadMultiLayerWizard(FootprintWizardBase.FootprintWizard):
         #self.AddStartVia(pos - wxPoint(0,diogonal_length/2),diogonal_length,via_size,drill_size,name)
 
         linepos = pos + wxPoint(0,0.5*touch_clearance)
-        linelength = touch_clearance + 0.25 * diogonal_length 
+        linelength = touch_clearance + 0.25 * diogonal_length
         size_line = wxSize(line_thickness,linelength)
         module = self.module
         pad = self.smdLinePad(module,size_line,linepos,name,1,False)
@@ -278,17 +278,17 @@ class TouchPadMultiLayerWizard(FootprintWizardBase.FootprintWizard):
         # set SMD attribute
         self.module.SetAttributes(PAD_ATTRIB_SMD)
 
-        
+
         # starting pad
         xpos = diogonal_length/2- 0.5 * columns * (diogonal_length+touch_clearance)
         ypos = diogonal_length/2+touch_clearance/2 - 0.5 * rows * (diogonal_length+touch_clearance)
 
         pos = wxPointMM(pcbnew.ToMM(xpos), pcbnew.ToMM(ypos))
         module = self.module
-        
+
         width= (self.pads['columns']*(self.pads['diamond_width']+self.pads['clearance']))*0.99
         size_pad = wxSize(width,line_thickness)
-        
+
 
         for b in range(rows):
         	self.AddRow(pos,columns,touch_width,touch_clearance,diogonal_length,"r{r}".format(r=b),mask)
@@ -303,8 +303,8 @@ class TouchPadMultiLayerWizard(FootprintWizardBase.FootprintWizard):
         for b in range(columns):
             self.AddColumn(pos,rows,touch_width,touch_clearance,diogonal_length,"c{c}".format(c=b),via_size,drill_size,line_thickness,mask)
             pos += wxPoint(diogonal_length+touch_clearance,0)
-     
-        
+
+
 
 
 
